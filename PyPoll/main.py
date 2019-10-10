@@ -2,7 +2,7 @@
 # PyBank Script
 # Author:         Arnold Macamos
 # Date  :         October 09, 2019
-# Description:    This is to summarize the voting results
+# Description:    This is to summarize the election results
 #-------------------------------------------------------------------------------------------------------------------------------   
 
 
@@ -17,7 +17,7 @@ def output_result(result):
 
     print(result);
     
-    filePath = os.path.join("Output","poll_results.txt")
+    filePath = os.path.join("Output","election_results.txt")
 
     with open(filePath,"w") as resultFile:
         resultFile.write(result)
@@ -31,7 +31,7 @@ def output_result(result):
 def run_program():
     filePath = os.path.join("Resources","election_data.csv")
     listElecData = []         #to hold the list of the election data
-    #listElecSummary = []      #to hold the summary or election results
+    
     #read the data into the listElecData dictionary list
     with open(filePath) as csvFile:
         reader = csv.DictReader(csvFile)
@@ -48,13 +48,31 @@ def run_program():
                 }
             )
  
-    listElecSummary = collections.Counter([d['Candidate'] for d in listElecData])
-    totalVotes = sum(listElecSummary.values())
-    winner = max(listElecSummary, key=listElecSummary.get)
+    #set election summary results
+    elecSummary = collections.Counter([d['Candidate'] for d in listElecData])    
+    totalVotes = sum(elecSummary.values())
+    winner = max(elecSummary, key=elecSummary.get)
     
-    #get the list of values from the budgetData dictionary list
- 
-    print(winner)
+    #set election result text
+    result = f"""
+    Election Results
+    -------------------------------------------------
+    Total Votes : {totalVotes}
+    -------------------------------------------------
+    
+    """
+    
+    #iterate through the election summary counter
+    for elem in elecSummary:    
+        result = result + f"{elem} :  {'{:.2%}'.format(elecSummary[elem]/totalVotes)} ({elecSummary[elem]})\n    "
+  
+    result = result + f"""
+    -------------------------------------------------
+    Winner: {winner}
+    -------------------------------------------------    
+    """
+    
+    output_result(result)
 
 
 #-------------------------------------------------------------------------------------------------------------------------------   
