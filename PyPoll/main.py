@@ -10,20 +10,7 @@ import os
 import csv
 import collections
 
-#------------------------------------------------------------------------------------------------------------------------------- 
-# This will display the results on the terminal and also export it in an output file
-#-------------------------------------------------------------------------------------------------------------------------------   
-def output_result(result):
 
-    print(result);
-    
-    filePath = os.path.join("Output","election_results.txt")
-
-    with open(filePath,"w") as resultFile:
-        resultFile.write(result)
-        resultFile.close()
-    
-    print(f"The above result is also saved in {filePath}")
     
 #------------------------------------------------------------------------------------------------------------------------------- 
 # This is the starting function of the program
@@ -74,6 +61,22 @@ def run_program():
     
     output_result(result)
 
+
+#------------------------------------------------------------------------------------------------------------------------------- 
+# This will display the results on the terminal and also export it in an output file
+#-------------------------------------------------------------------------------------------------------------------------------   
+def output_result(result):
+
+    print(result);
+    
+    filePath = os.path.join("Output","election_results.txt")
+
+    with open(filePath,"w") as resultFile:
+        resultFile.write(result)
+        resultFile.close()
+    
+    print(f"The above result is also saved in {filePath}")
+    
 
 #-------------------------------------------------------------------------------------------------------------------------------   
 # Start the program
